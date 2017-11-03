@@ -11,7 +11,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class SpellTypeBase extends SpellActionBase implements IForgeRegistryEntry<SpellPartBase>{
 	
-	//Types generally shouldn't be applying effects directly, rather modifying existing effects. Still possible to override if needed.
+	//Types generally shouldn't be applying effects directly, rather modifying existing effects. Still possible to override if needed, because why not?.
 	
 	@Override
 	public EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, NBTTagCompound spell){return EnumActionResult.PASS;}

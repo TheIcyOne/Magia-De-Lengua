@@ -1,5 +1,7 @@
-package com.headfishindustries.lengua.spell;
+package com.headfishindustries.lengua.util;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.headfishindustries.lengua.api.MalformedSpellException;
@@ -9,8 +11,10 @@ import com.headfishindustries.lengua.api.spell.SpellPartBase;
 import com.headfishindustries.lengua.api.spell.SpellTypeBase;
 import com.headfishindustries.lengua.defs.DataDefs;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SpellUtils {
@@ -18,6 +22,8 @@ public class SpellUtils {
 	public void startSpellCast(NBTTagCompound spell, EntityLiving caster, World world){
 		
 	}
+	
+	
 	
 	/** Used more to change user-written spells into code-readable ones.
 	 * @throws MalformedSpellException **/
@@ -30,19 +36,38 @@ public class SpellUtils {
 	
 	private NBTTagCompound parseRecursor(String[] parts) throws MalformedSpellException{
 		NBTTagCompound beepBoop = new NBTTagCompound(); //Descriptive variable names are overrated.
-		 for (int i = 0; i <= parts.length; i++){
+		 for (Integer i = 0; i <= parts.length; i++){
 			 SpellPartBase part = PartRegistry.instance.getValue(DataDefs.MODID + ":" + parts[i]);
 			 if (part instanceof SpellControlBase){
 				 if (i == parts.length) throw new MalformedSpellException("Spells cannot end with a control part."); //Have you ever tried teaching from the back of the class? Can't control anything from there.
 				 String[] subParts = Arrays.copyOfRange(parts, i+1, parts.length);
-				 beepBoop.setTag(("part_" + i), parseRecursor(subParts));
+				 beepBoop.setTag((i.toString()), parseRecursor(subParts));
 			 }else if(part instanceof SpellTypeBase){
-				 beepBoop.setString("type_" + i, parts[i]);
+				 beepBoop.setString(i.toString(), parts[i]);
 			 }else{
-				 beepBoop.setString("part_" + i, parts[i]);
+				 beepBoop.setString(i.toString(), parts[i]);
 			 }
 		 }
 		return beepBoop;
+	}
+	
+	List<String> getParts(NBTTagCompound spell){
+		List<String> parts = new ArrayList<String>();
+		Integer i = 0;
+		while (true){
+			parts.add(spell.getString(i.toString()));
+			if (spell.getString(i.toString()) == null && spell.getTag(i.toString()) == null)
+			break;
+		}
+		return parts;
+	}
+	
+	public static void applyEffectEntity(NBTTagCompound spell, Entity target, EntityLiving caster){
+		
+	}
+	
+	public static void applyEffectBlock(NBTTagCompound spell, BlockPos pos, EntityLiving caster){
+		
 	}
 
 }
