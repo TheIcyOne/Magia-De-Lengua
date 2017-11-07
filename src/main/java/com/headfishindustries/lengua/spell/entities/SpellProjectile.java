@@ -4,6 +4,7 @@ import com.headfishindustries.lengua.api.energy.Energy;
 import com.headfishindustries.lengua.spell.SpellEntity;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class SpellProjectile extends SpellEntity{
