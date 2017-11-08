@@ -4,6 +4,7 @@ package com.headfishindustries.lengua.api.spell;
 import com.headfishindustries.lengua.api.energy.Energy;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -21,9 +22,9 @@ public abstract class SpellPartBase extends IForgeRegistryEntry.Impl<SpellPartBa
 	/** Either this or applyEffectBlock should be called on all parts in a spell by the end of execution,
 	 *  provided that the spell is not cancelled at some point e.g. because nothing was hit.
 	 **/
-	public abstract EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, NBTTagCompound spell);
+	public abstract EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, NBTTagCompound spell, EntityLiving caster);
 	
-	public abstract EnumActionResult applyEffectBlock(BlockPos target, World world, Energy modifiers, NBTTagCompound spell);
+	public abstract EnumActionResult applyEffectBlock(BlockPos target, World world, Energy modifiers, NBTTagCompound spell, EntityLiving caster);
 	
 	/**
 	 * Note that mana cost is calculated iteratively from each spell part in the spell, so a functionally identical spell
