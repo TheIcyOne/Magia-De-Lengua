@@ -15,9 +15,9 @@ public abstract class SpellTypeBase extends SpellPartBase implements IForgeRegis
 	//Types generally shouldn't be applying effects directly, rather modifying existing effects. Still possible to override if needed, because why not?.
 	
 	@Override
-	public EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, NBTTagCompound spell, EntityLiving caster){return EnumActionResult.PASS;}
+	public EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, Spell spell, EntityLiving caster){return EnumActionResult.PASS;}
 	
 	@Override
-	public EnumActionResult applyEffectBlock(BlockPos target, World world, Energy modifiers, NBTTagCompound spell, EntityLiving caster){return EnumActionResult.PASS;}
+	public EnumActionResult applyEffectBlock(BlockPos target, World world, Energy modifiers, Spell spell, EntityLiving caster){return EnumActionResult.PASS;}
 
 }

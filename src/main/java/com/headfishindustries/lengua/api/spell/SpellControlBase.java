@@ -10,5 +10,5 @@ import net.minecraft.world.World;
 
 public abstract class SpellControlBase extends SpellPartBase{
 	
-	public abstract EnumActionResult onCast(BlockPos target, World world, Energy modifiers, NBTTagCompound spell, EntityLiving caster);;
+	public abstract EnumActionResult onCast(BlockPos target, World world, Energy modifiers, Spell spell, EntityLiving caster);;
 }

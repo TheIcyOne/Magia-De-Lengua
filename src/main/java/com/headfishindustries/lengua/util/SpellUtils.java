@@ -6,24 +6,15 @@ import java.util.Arrays;
 
 import com.headfishindustries.lengua.api.MalformedSpellException;
 import com.headfishindustries.lengua.api.PartRegistry;
+import com.headfishindustries.lengua.api.spell.Spell;
 import com.headfishindustries.lengua.api.spell.SpellControlBase;
 import com.headfishindustries.lengua.api.spell.SpellPartBase;
 import com.headfishindustries.lengua.api.spell.SpellTypeBase;
 import com.headfishindustries.lengua.defs.DataDefs;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class SpellUtils {
-	
-	public void startSpellCast(NBTTagCompound spell, EntityLiving caster, World world){
-		
-	}
-	
-	
 	
 	/** Used more to change user-written spells into code-readable ones.
 	 * @throws MalformedSpellException **/
@@ -62,12 +53,8 @@ public class SpellUtils {
 		return parts;
 	}
 	
-	public static void applyEffectEntity(NBTTagCompound spell, Entity target, EntityLiving caster){
-		
-	}
-	
-	public static void applyEffectBlock(NBTTagCompound spell, BlockPos pos, EntityLiving caster){
-		
+	public Spell getSpell(NBTTagCompound in){
+		return Spell.fromString(getParts(in));
 	}
 
 }

@@ -4,6 +4,7 @@ import com.headfishindustries.lengua.api.energy.Energy;
 import com.headfishindustries.lengua.api.spell.Spell;
 import com.headfishindustries.lengua.spell.SpellEntity;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
@@ -22,13 +23,16 @@ public class SpellProjectile extends SpellEntity{
 		this.modifiedSpeed = this.getSpeedMod();
 		this.caster = castEnt;
 		this.spell = s;
+		this.setVelocity(this.modifiedSpeed * Math.sin(this.rotationYaw), this.modifiedSpeed * Math.sin(this.rotationPitch), this.modifiedSpeed * Math.cos(this.rotationYaw));
 	}
 	
 	@Override
 	public void onEntityUpdate(){
 		super.onEntityUpdate();
 		this.setRotation((float)Math.tan(this.motionX/this.motionZ), (float) Math.tan(this.motionY/Math.sqrt(this.motionX*this.motionX + this.motionZ* this.motionZ )));
-		this.setVelocity(this.modifiedSpeed * Math.sin(this.rotationYaw), this.modifiedSpeed * Math.sin(this.rotationPitch), this.modifiedSpeed * Math.cos(this.rotationYaw));
+		for (Entity hit : this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox())){
+			this.spell.applyEffectEntity(hit, world, this.energy, caster);
+		}
 	}
 	
 	
@@ -37,6 +41,16 @@ public class SpellProjectile extends SpellEntity{
 		double speed = this.baseSpeed;
 		speed *= Math.max(1.2 * (1 + this.energy.air - this.energy.earth), 1);
 		return speed;
+	}
+
+	@Override
+	public void setCaster(EntityLiving caster) {
+		this.caster = caster;
+	}
+
+	@Override
+	public EntityLiving getCaster() {
+		return this.caster;
 	}
 
 }
