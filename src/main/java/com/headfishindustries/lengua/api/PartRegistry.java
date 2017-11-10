@@ -8,8 +8,10 @@ import java.util.Set;
 import com.google.common.collect.BiMap;
 import com.headfishindustries.lengua.Lengua;
 import com.headfishindustries.lengua.api.spell.SpellPartBase;
+import com.headfishindustries.lengua.defs.DataDefs;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class PartRegistry implements IForgeRegistry<SpellPartBase>{
@@ -18,6 +20,17 @@ public class PartRegistry implements IForgeRegistry<SpellPartBase>{
 	
 	private BiMap<ResourceLocation, SpellPartBase> partMap;
 	private BiMap<ResourceLocation, String> names;
+	private boolean isLocked = false;
+	
+	public void lock(){
+		//Exists purely to piss people off.
+		//Reflect this and I'll set Nut on you. Just register your stuff at the right time.
+		if(Loader.instance().activeModContainer().getModId().equals(DataDefs.MODID)){
+			this.isLocked = true;
+		}else{
+			//lolno
+		}
+	}
 
 	@Override
 	public Iterator<SpellPartBase> iterator() {
@@ -33,6 +46,9 @@ public class PartRegistry implements IForgeRegistry<SpellPartBase>{
 
 	@Override
 	public void register(SpellPartBase value) {
+		if (this.isLocked){
+			Lengua.LOGGER.error(String.format("Modid %s has attempted to register a spell part, but the registry is locked. Poke its author.", Loader.instance().activeModContainer().getModId()));
+		}
 		if(this.containsKey(value.getRegistryName())){
 			Lengua.LOGGER.warn(String.format("Duplicate spell part entry detected for key %s, the additional part will not be added.", value.getRegistryName()));
 			return;

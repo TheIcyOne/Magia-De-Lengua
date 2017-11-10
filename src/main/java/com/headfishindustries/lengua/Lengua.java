@@ -5,9 +5,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.headfishindustries.lengua.api.PartRegistry;
+import com.headfishindustries.lengua.api.spell.SpellPartBase;
 import com.headfishindustries.lengua.defs.DataDefs;
 import com.headfishindustries.lengua.proxy.CommonProxy;
 
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -37,7 +39,13 @@ public class Lengua {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e){
+		PartRegistry.instance.lock();
 		proxy.postInit(e);
+	}
+	
+	@EventHandler
+	public void registrySetup(RegistryEvent<SpellPartBase> e){
+		
 	}
 
 	
