@@ -6,14 +6,12 @@ import com.headfishindustries.lengua.api.energy.Energy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public abstract class SpellPartBase extends IForgeRegistryEntry.Impl<SpellPartBase>{
+public abstract class AbstractPart extends IForgeRegistryEntry.Impl<AbstractPart>{
 	
 	private String partWord;
 	
@@ -37,7 +35,9 @@ public abstract class SpellPartBase extends IForgeRegistryEntry.Impl<SpellPartBa
 	public abstract float getFlatManaCost();
 	
 	/** Multiplier applied to current spell cost. **/
-	public abstract float getManaCostMultiplier();
+	public float getManaCostMultiplier(){
+		return 1f;
+	}
 	
 	/** Returns the word which is used on the player end when adding the part to a spell. Primarily used in {@link} SpellUtils.parseSpell() **/
 	public String getPartWord(){

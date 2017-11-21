@@ -1,7 +1,10 @@
 package com.headfishindustries.lengua.item;
 
+import com.headfishindustries.lengua.api.spell.Spell;
 import com.headfishindustries.lengua.defs.DataDefs;
+import com.headfishindustries.lengua.util.SpellUtils;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -20,9 +23,10 @@ public class SpellBase extends Item{
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
     {
-		NBTTagCompound cmp = stack.getSubCompound(DataDefs.SPELL_TAG_ID);
-		if (cmp == null) return; //WE GOT NO MAJICK, HALP
-		//castSpell(worldIn, entityLiving, cmp);
+		String tag = stack.getTagCompound().getString(DataDefs.SPELL_TAG_ID);
+		if (tag.length() == 0) return; //WE GOT NO MAJICK, HALP
+		Spell spell = SpellUtils.instance.getSpell(tag);
+		spell.onCast(entityLiving.getPosition(), worldIn, spell.getEnergy(),(EntityLiving)entityLiving);
     }
 	
 	@Override

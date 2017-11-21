@@ -7,18 +7,18 @@ import java.util.Set;
 
 import com.google.common.collect.BiMap;
 import com.headfishindustries.lengua.Lengua;
-import com.headfishindustries.lengua.api.spell.SpellPartBase;
+import com.headfishindustries.lengua.api.spell.AbstractPart;
 import com.headfishindustries.lengua.defs.DataDefs;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class PartRegistry implements IForgeRegistry<SpellPartBase>{
+public class PartRegistry implements IForgeRegistry<AbstractPart>{
 	
 	public static PartRegistry instance = new PartRegistry();
 	
-	private BiMap<ResourceLocation, SpellPartBase> partMap;
+	private BiMap<ResourceLocation, AbstractPart> partMap;
 	private BiMap<ResourceLocation, String> names;
 	private boolean isLocked = false;
 	
@@ -33,24 +33,24 @@ public class PartRegistry implements IForgeRegistry<SpellPartBase>{
 	}
 
 	@Override
-	public Iterator<SpellPartBase> iterator() {
+	public Iterator<AbstractPart> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Class<SpellPartBase> getRegistrySuperType() {
+	public Class<AbstractPart> getRegistrySuperType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void register(SpellPartBase value) {
+	public void register(AbstractPart value) {
 		if (this.isLocked){
 			Lengua.LOGGER.error(String.format("Modid %s has attempted to register a spell part, but the registry is locked. Poke its author.", Loader.instance().activeModContainer().getModId()));
 		}
 		if(this.containsKey(value.getRegistryName())){
-			Lengua.LOGGER.warn(String.format("Duplicate spell part entry detected for key %s, the additional part will not be added.", value.getRegistryName()));
+			Lengua.LOGGER.warn(String.format("Duplicate spell part entry detected for key %s, the new part.", value.getRegistryName()));
 			return;
 		}else{ //Highly necessary. If I didn't have this, maybe I'd have to be more sarcastic about things.
 			this.partMap.put(value.getRegistryName(), value);
@@ -59,8 +59,8 @@ public class PartRegistry implements IForgeRegistry<SpellPartBase>{
 	}
 
 	@Override
-	public void registerAll(SpellPartBase... values) {
-		for (SpellPartBase part : values){
+	public void registerAll(AbstractPart... values) {
+		for (AbstractPart part : values){
 			register(part);
 		}
 	}
@@ -71,17 +71,17 @@ public class PartRegistry implements IForgeRegistry<SpellPartBase>{
 	}
 
 	@Override
-	public boolean containsValue(SpellPartBase value) {
+	public boolean containsValue(AbstractPart value) {
 		return partMap.containsValue(value);
 	}
 
 	@Override
-	public SpellPartBase getValue(ResourceLocation key) {
+	public AbstractPart getValue(ResourceLocation key) {
 		return partMap.get(key);
 	}
 
 	@Override
-	public ResourceLocation getKey(SpellPartBase value) {
+	public ResourceLocation getKey(AbstractPart value) {
 		return partMap.inverse().get(value);
 	}
 
@@ -92,12 +92,12 @@ public class PartRegistry implements IForgeRegistry<SpellPartBase>{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SpellPartBase> getValues() {
-		return (List<SpellPartBase>) partMap.values();
+	public List<AbstractPart> getValues() {
+		return (List<AbstractPart>) partMap.values();
 	}
 
 	@Override
-	public Set<Entry<ResourceLocation, SpellPartBase>> getEntries() {
+	public Set<Entry<ResourceLocation, AbstractPart>> getEntries() {
 		return partMap.entrySet();
 	}
 
@@ -107,7 +107,7 @@ public class PartRegistry implements IForgeRegistry<SpellPartBase>{
 		return null;
 	}
 
-	public SpellPartBase getValue(String string) {
+	public AbstractPart getValue(String string) {
 		return getValue(getRL(string));
 	}
 	
@@ -117,6 +117,10 @@ public class PartRegistry implements IForgeRegistry<SpellPartBase>{
 	
 	public String getPartName(ResourceLocation in){
 		return this.names.get(in);
+	}
+	
+	public String getPartName(AbstractPart in){
+		return this.names.get(partMap.inverse().get(in));
 	}
 
 

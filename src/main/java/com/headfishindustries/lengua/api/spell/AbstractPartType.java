@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public abstract class SpellTypeBase extends SpellPartBase implements IForgeRegistryEntry<SpellPartBase>{
+public abstract class AbstractPartType extends AbstractPart implements IForgeRegistryEntry<AbstractPart>{
 	
 	//Types generally shouldn't be applying effects directly, rather modifying existing effects. Still possible to override if needed, because why not?.
 	

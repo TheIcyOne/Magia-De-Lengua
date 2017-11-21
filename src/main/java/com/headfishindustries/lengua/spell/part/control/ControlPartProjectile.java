@@ -2,20 +2,18 @@ package com.headfishindustries.lengua.spell.part.control;
 
 import com.headfishindustries.lengua.api.energy.Energy;
 import com.headfishindustries.lengua.api.spell.Spell;
-import com.headfishindustries.lengua.api.spell.SpellControlBase;
+import com.headfishindustries.lengua.api.spell.AbstractPartControl;
 import com.headfishindustries.lengua.spell.entities.SpellProjectile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ControlPartProjectile extends SpellControlBase{
+public class ControlPartProjectile extends AbstractPartControl{
 
 	public ControlPartProjectile() {
-		this.setRegistryName("ControlPartProjectile");
 	}
 	
 	
@@ -55,7 +53,7 @@ public class ControlPartProjectile extends SpellControlBase{
 	@Override
 	public float getManaCostMultiplier() {
 		
-		return 1;
+		return 1.5f;
 	}
 
 	@Override
