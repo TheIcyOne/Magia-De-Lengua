@@ -21,12 +21,14 @@ public class ActionDamageMagical extends AbstractPartAction{
 	
 	@Override
 	public Energy getEnergyRequirements() {
+		return new Energy(0, 0, 0, 0, 10, 10);
 	}
 
 	@Override
 	public EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, Spell spell,
 			EntityLivingBase caster) {
 			if (target instanceof EntityLiving){
+				((EntityLiving)target).attackEntityFrom(DamageSource.MAGIC, 4);
 				return EnumActionResult.SUCCESS;
 			}
 		return EnumActionResult.PASS;
@@ -41,10 +43,12 @@ public class ActionDamageMagical extends AbstractPartAction{
 
 	@Override
 	public float getFlatManaCost() {
+		return 150;
 	}
 
 	@Override
 	public float getManaCostMultiplier() {
+		return 1.5f;
 	}
 
 	@Override
