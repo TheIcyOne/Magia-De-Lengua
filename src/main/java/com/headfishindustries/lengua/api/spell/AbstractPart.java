@@ -1,6 +1,7 @@
 package com.headfishindustries.lengua.api.spell;
 
 
+import com.headfishindustries.lengua.api.PartRegistry;
 import com.headfishindustries.lengua.api.energy.Energy;
 
 import net.minecraft.entity.Entity;
@@ -13,6 +14,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class AbstractPart extends IForgeRegistryEntry.Impl<AbstractPart>{
+	
+	protected String partWord;
 	
 	
 	/** e.g. return new Energy(100, 100, 100, 100, 100, 100) **/
@@ -40,7 +43,10 @@ public abstract class AbstractPart extends IForgeRegistryEntry.Impl<AbstractPart
 	}
 	
 	/** Returns the word which is used on the player end when adding the part to a spell. Primarily used in {@link} SpellUtils.parseSpell() **/
-	public abstract String getPartWord();
+	public String getPartWord(){
+		if (this.partWord == "") return PartRegistry.instance.getKey(this).toString();
+		else return this.partWord;
+	}
 	
 	//TODO: Maybe energy affinities? Definitely not yet.
 	
