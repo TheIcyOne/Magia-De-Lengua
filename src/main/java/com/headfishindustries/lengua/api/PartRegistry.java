@@ -1,11 +1,14 @@
 package com.headfishindustries.lengua.api;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Maps;
 import com.headfishindustries.lengua.Lengua;
 import com.headfishindustries.lengua.api.spell.AbstractPart;
 import com.headfishindustries.lengua.defs.DataDefs;
@@ -18,17 +21,27 @@ public class PartRegistry implements IForgeRegistry<AbstractPart>{
 	
 	public static PartRegistry instance = new PartRegistry();
 	
-	private BiMap<ResourceLocation, AbstractPart> partMap;
-	private BiMap<ResourceLocation, String> names;
+	private BiMap<ResourceLocation, AbstractPart> partMap = HashBiMap.create();
 	private boolean isLocked = false;
+	
+	public List<ResourceLocation> getRLs(){
+		List<ResourceLocation> parts = new ArrayList<ResourceLocation>();
+		
+		for (ResourceLocation rl : partMap.keySet()) parts.add(rl);
+		
+		return parts;
+	}
+
 	
 	public void lock(){
 		//Exists purely to piss people off.
 		//Reflect this and I'll set Nut on you. Just register your stuff at the right time.
 		if(Loader.instance().activeModContainer().getModId().equals(DataDefs.MODID)){
+			Lengua.LOGGER.debug("Closing part registry. Who knows, this might actually be useful one day.");
 			this.isLocked = true;
 		}else{
 			//lolno
+			Lengua.LOGGER.error("The mod '" + Loader.instance().activeModContainer().getModId() + "' tried to lock a registry early. Bad mod, no cookies.");
 		}
 	}
 
@@ -46,15 +59,25 @@ public class PartRegistry implements IForgeRegistry<AbstractPart>{
 
 	@Override
 	public void register(AbstractPart value) {
-		if (this.isLocked){
-			Lengua.LOGGER.error(String.format("Modid %s has attempted to register a spell part, but the registry is locked. Poke its author.", Loader.instance().activeModContainer().getModId()));
+		if (value == null){
+			Lengua.LOGGER.error("Null value passed to registry. You monster");
+			return;
+		} else if (value.getRegistryName() == null){
+			Lengua.LOGGER.error(value.getPartWord() + " has no registry name.");
+			return;
+		} else if (value.getRegistryName().toString().contains(" ")){
+			Lengua.LOGGER.error("The registry name for part '" + value.getPartWord() + "' contains a space. This is not allowed, naughty mod.");
+		}
+
+		if (this.isLocked){//Highly necessary. If I didn't have this, maybe I'd have to be more sarcastic about things.
+			Lengua.LOGGER.error(String.format("Modid %s has attempted to register a spell part, but the registry is locked. Poke its author so they hurry up next time.", Loader.instance().activeModContainer().getModId()));
 		}
 		if(this.containsKey(value.getRegistryName())){
 			Lengua.LOGGER.warn(String.format("Duplicate spell part entry detected for key %s, the new part.", value.getRegistryName()));
 			return;
-		}else{ //Highly necessary. If I didn't have this, maybe I'd have to be more sarcastic about things.
-			this.partMap.put(value.getRegistryName(), value);
-			this.names.put(value.getRegistryName(), value.getPartWord());
+		}else{
+			this.partMap.put(
+					value.getRegistryName(), value);
 		}
 	}
 
@@ -108,20 +131,7 @@ public class PartRegistry implements IForgeRegistry<AbstractPart>{
 	}
 
 	public AbstractPart getValue(String string) {
-		return getValue(getRL(string));
+		return getValue(new ResourceLocation(string));
 	}
-	
-	public ResourceLocation getRL(String in){
-		return this.names.inverse().get(in);
-	}
-	
-	public String getPartName(ResourceLocation in){
-		return this.names.get(in);
-	}
-	
-	public String getPartName(AbstractPart in){
-		return this.names.get(partMap.inverse().get(in));
-	}
-
 
 }

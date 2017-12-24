@@ -5,7 +5,7 @@ import com.headfishindustries.lengua.api.spell.Spell;
 import com.headfishindustries.lengua.api.spell.AbstractPartControl;
 import com.headfishindustries.lengua.spell.entities.SpellProjectile;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -18,15 +18,15 @@ public class ControlPartProjectile extends AbstractPartControl{
 	
 	
 	@Override
-	public EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, Spell spell, EntityLiving caster) {
+	public EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, Spell spell, EntityLivingBase caster) {
 		SpellProjectile proj = new SpellProjectile(world, modifiers, caster, spell);
-		proj.setPositionAndRotation(target.posX + Math.sin(target.rotationYaw) * 2, target.posY + target.getYOffset() + Math.cos(target.rotationPitch) * 2, target.posZ + Math.cos(target.rotationYaw) * 2, target.rotationYaw, target.rotationPitch);
+		proj.setPositionAndRotation(target.posX, target.posY + target.getEyeHeight() - 0.10000000149011612D, target.posZ, target.rotationYaw, target.rotationPitch);
 		world.spawnEntity(proj);
 		return EnumActionResult.SUCCESS;
 	}
 
 	@Override
-	public EnumActionResult applyEffectBlock(BlockPos target, World world, Energy modifiers, Spell spell, EntityLiving caster) {
+	public EnumActionResult applyEffectBlock(BlockPos target, World world, Energy modifiers, Spell spell, EntityLivingBase caster) {
 		SpellProjectile proj = new SpellProjectile(world, modifiers, caster, spell);
 		proj.setPositionAndRotation((double)target.getX() + (world.rand.nextFloat() - 1) * 2,(double)target.getY() + (world.rand.nextFloat() - 1) * 2, (double)target.getZ() + (world.rand.nextFloat() - 1) * 2, (float)((world.rand.nextFloat() - 1) * 2 * Math.PI), (float)((world.rand.nextFloat() - 1) * 2 * Math.PI));
 		
@@ -36,13 +36,13 @@ public class ControlPartProjectile extends AbstractPartControl{
 
 	@Override
 	public EnumActionResult onCast(BlockPos target, World world, Energy modifiers, Spell spell,
-			EntityLiving caster) {
+			EntityLivingBase caster) {
 		return applyEffectEntity(caster, world, modifiers, spell, caster);
 	}
 
 	@Override
 	public Energy getEnergyRequirements() {
-		return new Energy(0, 0, 0, 0, 0, 0);
+		return new Energy(25, 0, 0, 15, 5, 5);
 	}
 
 	@Override
@@ -60,6 +60,12 @@ public class ControlPartProjectile extends AbstractPartControl{
 	public ItemStack[] getReagents() {
 		
 		return null;
+	}
+
+
+	@Override
+	public String getPartWord() {
+		return "Projectile";
 	}
 
 }

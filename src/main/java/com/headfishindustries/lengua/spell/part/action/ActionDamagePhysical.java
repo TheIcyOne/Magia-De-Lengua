@@ -6,6 +6,7 @@ import com.headfishindustries.lengua.api.spell.AbstractPartAction;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
@@ -24,7 +25,7 @@ public class ActionDamagePhysical extends AbstractPartAction{
 
 	@Override
 	public EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, Spell spell,
-			EntityLiving caster) {
+			EntityLivingBase caster) {
 			if (target instanceof EntityLiving){
 				((EntityLiving)target).attackEntityFrom(DamageSource.GENERIC, 5);
 				return EnumActionResult.SUCCESS;
@@ -34,7 +35,7 @@ public class ActionDamagePhysical extends AbstractPartAction{
 
 	@Override
 	public EnumActionResult applyEffectBlock(BlockPos target, World world, Energy modifiers, Spell spell,
-			EntityLiving caster) {
+			EntityLivingBase caster) {
 		// TODO Auto-generated method stub
 		return EnumActionResult.FAIL;
 	}
@@ -52,6 +53,12 @@ public class ActionDamagePhysical extends AbstractPartAction{
 	@Override
 	public ItemStack[] getReagents() {
 		return null;
+	}
+
+	@Override
+	public String getPartWord() {
+		// TODO Auto-generated method stub
+		return "damage_physical";
 	}
 
 }

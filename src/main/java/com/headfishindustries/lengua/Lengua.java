@@ -4,14 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.headfishindustries.lengua.api.PartRegistry;
-import com.headfishindustries.lengua.api.spell.AbstractPart;
 import com.headfishindustries.lengua.defs.ContentDefs;
 import com.headfishindustries.lengua.defs.DataDefs;
 import com.headfishindustries.lengua.proxy.CommonProxy;
 
-import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -19,7 +16,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = DataDefs.MODID, name = DataDefs.NAME, version = DataDefs.VERSION, acceptedMinecraftVersions = "[1.12, 1.13]")
 public class Lengua {
@@ -29,6 +25,8 @@ public class Lengua {
 	
 	@SidedProxy(clientSide="com.headfishindustries.lengua.proxy.ClientProxy", serverSide="com.headfishindustries.lengua.proxy.CommonProxy")
 	public static CommonProxy proxy;
+	
+	public static PartRegistry pr;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e){
@@ -40,6 +38,7 @@ public class Lengua {
 	@EventHandler
 	public void init(FMLInitializationEvent e){
 		proxy.init(e);
+		ContentDefs.INSTANCE.registerParts();
 	}
 	
 	@EventHandler

@@ -4,44 +4,40 @@ import com.headfishindustries.lengua.api.energy.Energy;
 import com.headfishindustries.lengua.api.spell.Spell;
 import com.headfishindustries.lengua.spell.SpellEntity;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
 public class SpellProjectile extends SpellEntity{
 	
-	private final double baseSpeed = 2;
-	private double modifiedSpeed;
-	private Energy energy;
-	private EntityLiving caster;
-	private Spell spell;
+	protected double baseSpeed;
+	protected double modifiedSpeed;
 	
-	public SpellProjectile(World world, Energy energies, EntityLiving castEnt, Spell s) {
+	public SpellProjectile(World world){
 		super(world);
+	}
+	
+	public SpellProjectile(World world, Energy energies, EntityLivingBase c, Spell s) {
+		super(world);
+		this.baseSpeed = 1.5f;
 		this.energy = energies;
-		this.modifiedSpeed = this.getSpeedMod();
-		this.caster = castEnt;
 		this.spell = s;
-		this.setVelocity(this.modifiedSpeed * Math.sin(this.rotationYaw), this.modifiedSpeed * Math.sin(this.rotationPitch), this.modifiedSpeed * Math.cos(this.rotationYaw));
+		this.caster = c;
+		this.modifiedSpeed = this.getSpeedMod();
+		this.setRotation(c.rotationYaw, c.rotationPitch);
+		this.setVelocity(this.modifiedSpeed * Math.sin(Math.toRadians(-this.rotationYaw)) * Math.cos(Math.toRadians(this.rotationPitch)), this.modifiedSpeed * Math.sin(Math.toRadians(-this.rotationPitch)), this.modifiedSpeed * Math.cos(Math.toRadians(-this.rotationYaw)) * Math.cos(Math.toRadians(this.rotationPitch)));
+		this.setSize(0.5f, 0.5f);
+
 	}
 	
 	@Override
-	public void onEntityUpdate(){
-		super.onEntityUpdate();
-		this.setRotation((float)Math.tan(this.motionX/this.motionZ), (float) Math.tan(this.motionY/Math.sqrt(this.motionX*this.motionX + this.motionZ* this.motionZ )));
-		for (Entity hit : this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox())){
-			this.spell.applyEffectEntity(hit, world, this.energy, caster);
-		}
-	}
-	
-	
-	
-	private double getSpeedMod(){
+	public double getSpeedMod(){
 		double speed = this.baseSpeed;
-		speed *= Math.max(1.2 * (1 + this.energy.air - this.energy.earth), 1);
+		double mod = 1.2 * (1 + this.energy.air - this.energy.earth);
+		speed *= Math.max(mod, 1);
 		return speed;
 	}
+
 
 	@Override
 	public void setCaster(EntityLiving caster) {
@@ -49,8 +45,13 @@ public class SpellProjectile extends SpellEntity{
 	}
 
 	@Override
-	public EntityLiving getCaster() {
+	public EntityLivingBase getCaster() {
 		return this.caster;
+	}
+	
+	@Override
+	public String toString(){
+		return("SpellProjectile: " + this.getPosition());
 	}
 
 }
