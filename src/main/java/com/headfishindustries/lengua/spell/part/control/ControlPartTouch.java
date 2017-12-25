@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 
 public class ControlPartTouch extends AbstractPartControl{
 
+	/** Show me on the doll... **/
 	public ControlPartTouch() {
 		
 	}
