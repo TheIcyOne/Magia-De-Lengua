@@ -9,6 +9,7 @@ import com.headfishindustries.lengua.spell.entities.SpellProjectile;
 import com.headfishindustries.lengua.spell.part.action.ActionDamageMagical;
 import com.headfishindustries.lengua.spell.part.action.ActionDamagePhysical;
 import com.headfishindustries.lengua.spell.part.control.ControlPartProjectile;
+import com.headfishindustries.lengua.spell.part.control.ControlPartTouch;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -32,6 +33,8 @@ public class ContentDefs {
 	public ItemBlock itemSpellTable;
 	
 	public ControlPartProjectile partProjectile;
+	public ControlPartTouch partTouch;
+	
 	public ActionDamagePhysical damagePhysical;
 	public ActionDamageMagical damageMagical;
 	
@@ -43,6 +46,7 @@ public class ContentDefs {
 		this.itemSpellTable = new ItemBlock(this.blockSpellTable);
 		
 		this.partProjectile = new ControlPartProjectile();
+		this.partTouch = new ControlPartTouch();
 		this.damagePhysical = new ActionDamagePhysical();
 		this.damageMagical = new ActionDamageMagical();
 		
@@ -89,6 +93,7 @@ public class ContentDefs {
 	public void registerParts(){
 		Lengua.LOGGER.info("Registering spell parts.");
 		register(this.partProjectile, "control_projectile");
+		register(this.partTouch, "control_touch");
 		register(this.damagePhysical, "action_damage_physical");
 		register(this.damageMagical, "action_damage_magical");
 	}

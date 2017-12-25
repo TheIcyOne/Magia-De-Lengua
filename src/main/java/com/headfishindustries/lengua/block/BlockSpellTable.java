@@ -36,7 +36,7 @@ public class BlockSpellTable extends Block /* implements ITileEntityProvider*/{
 	 public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
 		ItemStack stack = new ItemStack(ContentDefs.INSTANCE.itemSpellBase);
 		NBTTagCompound nbt = (stack.getTagCompound() != null) ? stack.getTagCompound() : new NBTTagCompound();
-		nbt.setString(DataDefs.SPELL_TAG_ID, ContentDefs.INSTANCE.partProjectile.getRegistryName() + " " + ContentDefs.INSTANCE.damagePhysical.getRegistryName());
+		nbt.setString(DataDefs.SPELL_TAG_ID, ContentDefs.INSTANCE.partTouch.getRegistryName() + " " + ContentDefs.INSTANCE.damagePhysical.getRegistryName());
 		stack.setTagCompound(nbt);
 		playerIn.addItemStackToInventory(stack);
 		return true;

@@ -7,7 +7,6 @@ import com.headfishindustries.lengua.Lengua;
 import com.headfishindustries.lengua.api.PartRegistry;
 import com.headfishindustries.lengua.api.energy.Energy;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -148,7 +147,7 @@ public class Spell {
 		}
 	}
 	
-	public void applyEffectBlock(BlockPos target, World world, Energy modifiers, EntityLiving caster){
+	public void applyEffectBlock(BlockPos target, World world, Energy modifiers, EntityLivingBase caster){
 		for(AbstractPart part : this.effects){
 			part.applyEffectBlock(target, world, modifiers, this, caster);
 		}
