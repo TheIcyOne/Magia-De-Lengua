@@ -55,13 +55,13 @@ public class ControlPartTouch extends AbstractPartControl{
 	@Override
 	public EnumActionResult applyEffectEntity(Entity target, World world, Energy modifiers, Spell spell,
 			EntityLivingBase caster) {
-		return null;
+		return EnumActionResult.PASS;
 	}
 
 	@Override
 	public EnumActionResult applyEffectBlock(BlockPos target, World world, Energy modifiers, Spell spell,
 			EntityLivingBase caster) {
-		spell.applyEffectBlock(target, world, modifiers,caster);
+		//spell.applyEffectBlock(target, world, modifiers,caster);
 		return EnumActionResult.PASS;
 	}
 

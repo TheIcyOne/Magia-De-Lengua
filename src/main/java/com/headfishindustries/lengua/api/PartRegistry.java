@@ -11,6 +11,8 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
 import com.headfishindustries.lengua.Lengua;
 import com.headfishindustries.lengua.api.spell.AbstractPart;
+import com.headfishindustries.lengua.api.spell.AbstractPartAction;
+import com.headfishindustries.lengua.api.spell.AbstractPartControl;
 import com.headfishindustries.lengua.defs.DataDefs;
 
 import net.minecraft.util.ResourceLocation;
@@ -22,6 +24,9 @@ public class PartRegistry implements IForgeRegistry<AbstractPart>{
 	public static PartRegistry instance = new PartRegistry();
 	
 	private BiMap<ResourceLocation, AbstractPart> partMap = HashBiMap.create();
+	private BiMap<ResourceLocation, AbstractPartControl> controlPart = HashBiMap.create();
+	private BiMap<ResourceLocation, AbstractPartAction> actionPart = HashBiMap.create();
+	
 	private boolean isLocked = false;
 	
 	public List<ResourceLocation> getRLs(){

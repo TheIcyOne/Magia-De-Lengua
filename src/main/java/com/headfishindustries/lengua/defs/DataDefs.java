@@ -10,4 +10,8 @@ public class DataDefs {
 	public static final String SPELL_TAG_ID = DataDefs.MODID + "-" + "spell_data";
 	
 	
+	//Gooey stuff
+	public static final int GUI_SPELL_WRITING = 0;
+	
+	
 }
