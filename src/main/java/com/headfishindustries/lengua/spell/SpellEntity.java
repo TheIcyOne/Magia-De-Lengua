@@ -8,6 +8,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public abstract class SpellEntity extends Entity{
@@ -54,6 +57,20 @@ public abstract class SpellEntity extends Entity{
 			this.spell.applyEffectEntity((EntityLivingBase)hit, this.world, this.energy, this.caster);
 			this.setDead();
 		}
+		
+	//	Vec3d position = new Vec3d(this.posX,this.posY, this.posZ);
+	//	Vec3d motion = new Vec3d(this.motionX, this.motionY, this.motionZ);
+		
+		
+	//	RayTraceResult r = this.world.rayTraceBlocks(position, position.add(motion));
+	//	if (r != null) {
+	//		this.spell.applyEffectBlock(r.getBlockPos(), this.world, this.energy, this.caster);
+	//		this.setDead();
+	//	}
+		BlockPos curPos = new BlockPos(Math.round(this.posX), Math.round(this.posY), Math.round(this.posZ));
+		BlockPos nextPos = new BlockPos(Math.round(this.posX + this.motionX), Math.round(this.posY + this.motionY), Math.round(this.posZ + this.motionZ));
+		
+		if (this.world.getBlockState(curPos).isSideSolid(world, pos, side))
 	}
 	
 	

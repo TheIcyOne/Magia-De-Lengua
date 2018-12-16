@@ -28,7 +28,7 @@ public class ControlPartTouch extends AbstractPartControl{
 	@Override
 	public EnumActionResult onCast(BlockPos target, World world, Energy modifiers, Spell spell,
 			EntityLivingBase caster) {
-		RayTraceResult bl = caster.rayTrace(2.5f, 1.0f);
+		RayTraceResult bl = world.rayTraceBlocks(caster.getPositionEyes(0), caster.getPositionEyes(0).add(caster.getLookVec().scale(0.5)));
 		double radius = 0.25d;
 		List<Vec3d> l = RayTraceUtils.toVecList(caster.getLookVec().scale(2.5f), caster.getPosition(), radius, caster.getYOffset());
 		for (Vec3d pos : l){

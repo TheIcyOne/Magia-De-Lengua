@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 public class TileSpellTable extends TileEntity implements IInventory{
 
 	public TileSpellTable() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override

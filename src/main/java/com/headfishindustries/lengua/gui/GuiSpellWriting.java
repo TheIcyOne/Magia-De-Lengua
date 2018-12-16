@@ -1,27 +1,33 @@
 package com.headfishindustries.lengua.gui;
 
-import com.headfishindustries.lengua.block.tile.TileSpellTable;
+import java.io.IOException;
+
+import org.lwjgl.input.Keyboard;
+
+import com.headfishindustries.lengua.Lengua;
 import com.headfishindustries.lengua.container.ContainerSpellTable;
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
 
 
 public class GuiSpellWriting extends GuiContainer{
 	
-	private GuiTextField searchBar;
 	private GuiTextField nameBar;
+	private GuiButton makeSpell;
+	private ContainerSpellTable table;
 	
-	public GuiSpellWriting(TileSpellTable tileSpellTable){
-		super(new ContainerSpellTable());
-
+	public GuiSpellWriting(ContainerSpellTable spellTable){
+		super(spellTable);
+		this.table = spellTable;
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.nameBar.drawTextBox();
 	}
 	
 	@Override
@@ -34,16 +40,45 @@ public class GuiSpellWriting extends GuiContainer{
 		super.initGui();
 		
 		nameBar = new GuiTextField(0, fontRenderer, 10, 10, 120, 24);
+		nameBar.setEnableBackgroundDrawing(true);
+		nameBar.setEnabled(true);
+		nameBar.setVisible(true);
+		nameBar.drawTextBox();
+		nameBar.setTextColor(-1);
+		nameBar.setDisabledTextColour(-1);
 		
-		searchBar = new GuiTextField(1, fontRenderer, 10, 26, 120, 36);
-		searchBar.setEnableBackgroundDrawing(true);
+
 		
+		makeSpell = new GuiButton(1, 10, 36, 120, 20, "Make Spell");
+		makeSpell.visible = true;
+		this.buttonList.add(makeSpell);
 		
+		Keyboard.enableRepeatEvents(true);
 	}
+	
+
+    @Override
+    public void onGuiClosed()
+    {
+        super.onGuiClosed();
+        Keyboard.enableRepeatEvents( false );
+    }
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		
 	}
+	
+	 protected void keyTyped(char typedChar, int keyCode) throws IOException
+	    {
+	        if (this.nameBar.textboxKeyTyped(typedChar, keyCode))
+	        {
+	            Lengua.LOGGER.info(nameBar.getText());
+	        }
+	        else
+	        {
+	            super.keyTyped(typedChar, keyCode);
+	        }
+	    }
 
 }

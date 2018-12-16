@@ -24,8 +24,8 @@ public class PartRegistry implements IForgeRegistry<AbstractPart>{
 	public static PartRegistry instance = new PartRegistry();
 	
 	private BiMap<ResourceLocation, AbstractPart> partMap = HashBiMap.create();
-	private BiMap<ResourceLocation, AbstractPartControl> controlPart = HashBiMap.create();
-	private BiMap<ResourceLocation, AbstractPartAction> actionPart = HashBiMap.create();
+	private BiMap<ResourceLocation, AbstractPartControl> controlParts = HashBiMap.create();
+	private BiMap<ResourceLocation, AbstractPartAction> actionParts = HashBiMap.create();
 	
 	private boolean isLocked = false;
 	
@@ -40,7 +40,7 @@ public class PartRegistry implements IForgeRegistry<AbstractPart>{
 	
 	public void lock(){
 		//Exists purely to piss people off.
-		//Reflect this and I'll set Nut on you. Just register your stuff at the right time.
+		//Mess with this and I'll set Nut on you. Just register your stuff at the right time.
 		if(Loader.instance().activeModContainer().getModId().equals(DataDefs.MODID)){
 			Lengua.LOGGER.debug("Closing part registry. Who knows, this might actually be useful one day.");
 			this.isLocked = true;

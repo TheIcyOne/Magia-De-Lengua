@@ -9,9 +9,8 @@ import net.minecraft.inventory.Container;
 
 public class ContainerSpellTable extends Container{
 
-	public ContainerSpellTable(InventoryPlayer using, TileSpellTable table) {
-		super()
-		addSlotToContainer(new SlotSpell(null, 0, 10, 10));
+	public ContainerSpellTable(TileSpellTable table) {
+		super();
 	}
 
 	@Override

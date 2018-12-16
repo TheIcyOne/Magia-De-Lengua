@@ -15,10 +15,6 @@ import net.minecraft.world.World;
 
 public class ActionDamageMagical extends AbstractPartAction{
 
-	public ActionDamageMagical() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	@Override
 	public Energy getEnergyRequirements() {
 		return new Energy(0, 0, 0, 0, 10, 10);

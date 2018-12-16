@@ -10,6 +10,13 @@ public class Energy {
 	public float light;
 	public float dark;
 	
+	public static Energy AIR = new Energy(1, 0, 0, 0, 0, 0);
+	public static Energy WATER = new Energy(0, 1, 0, 0, 0, 0);
+	public static Energy FIRE = new Energy(0, 0, 1, 0, 0, 0);
+	public static Energy EARTH = new Energy(0, 0, 0, 1, 0, 0);
+	public static Energy LIGHT = new Energy(0, 0, 0, 0, 1, 0);
+	public static Energy DARK = new Energy(0, 0, 0, 0, 0, 1);
+	
 	public Energy(float par1Air, float par2Water, float par3Fire, float par4Earth, float par5Light, float par6Dark){
 		this.air = par1Air;
 		this.water = par2Water;
@@ -65,6 +72,16 @@ public class Energy {
 		this.earth *= toMultiply.earth;
 		this.light *= toMultiply.light;
 		this.dark *= toMultiply.dark;
+		return this;
+	}
+	
+	public Energy multiply(int mult) {
+		this.air *= mult;
+		this.water *= mult;
+		this.fire *= mult;
+		this.earth *= mult;
+		this.light *= mult;
+		this.dark *= mult;
 		return this;
 	}
 	

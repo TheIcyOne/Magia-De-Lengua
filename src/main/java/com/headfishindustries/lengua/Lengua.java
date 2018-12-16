@@ -28,6 +28,7 @@ public class Lengua {
 	@SidedProxy(clientSide="com.headfishindustries.lengua.proxy.ClientProxy", serverSide="com.headfishindustries.lengua.proxy.CommonProxy")
 	public static CommonProxy proxy;
 	
+	
 	public static PartRegistry pr;
 	
 	@EventHandler

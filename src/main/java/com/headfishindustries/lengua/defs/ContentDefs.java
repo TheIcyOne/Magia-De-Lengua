@@ -6,6 +6,7 @@ import com.headfishindustries.lengua.api.spell.AbstractPart;
 import com.headfishindustries.lengua.block.BlockSpellTable;
 import com.headfishindustries.lengua.item.SpellBase;
 import com.headfishindustries.lengua.spell.entities.SpellProjectile;
+import com.headfishindustries.lengua.spell.part.action.ActionBreakBlock;
 import com.headfishindustries.lengua.spell.part.action.ActionDamageMagical;
 import com.headfishindustries.lengua.spell.part.action.ActionDamagePhysical;
 import com.headfishindustries.lengua.spell.part.control.ControlPartProjectile;
@@ -35,6 +36,7 @@ public class ContentDefs {
 	
 	public ActionDamagePhysical damagePhysical;
 	public ActionDamageMagical damageMagical;
+	public ActionBreakBlock breakBlock;
 	
 	public EntityEntry projectileEnt;
 
@@ -47,6 +49,7 @@ public class ContentDefs {
 		this.partTouch = new ControlPartTouch();
 		this.damagePhysical = new ActionDamagePhysical();
 		this.damageMagical = new ActionDamageMagical();
+		this.breakBlock = new ActionBreakBlock();
 		
 		this.projectileEnt = new EntityEntry(SpellProjectile.class, "spell_projectile");
 	}
@@ -94,6 +97,7 @@ public class ContentDefs {
 		register(this.partTouch, "control_touch");
 		register(this.damagePhysical, "action_damage_physical");
 		register(this.damageMagical, "action_damage_magical");
+		register(this.breakBlock, "action_break_block");
 	}
 	
 	private void register(AbstractPart part, String name){
