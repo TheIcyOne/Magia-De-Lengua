@@ -1,6 +1,7 @@
 package com.headfishindustries.lengua.block;
 
 import com.headfishindustries.lengua.Lengua;
+import com.headfishindustries.lengua.block.tile.TileSpellTable;
 import com.headfishindustries.lengua.defs.ContentDefs;
 import com.headfishindustries.lengua.defs.DataDefs;
 
@@ -31,18 +32,17 @@ public class BlockSpellTable extends Block implements ITileEntityProvider{
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		// TODO Auto-generated method stub
-		return null;
+		return new TileSpellTable();
 	}
 	
 	@Override
 	 public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
 		playerIn.openGui(Lengua.instance, DataDefs.GUI_SPELL_WRITING, worldIn, pos.getX(), pos.getY(), pos.getZ());
-		/*ItemStack stack = new ItemStack(ContentDefs.INSTANCE.itemSpellBase);
+		ItemStack stack = new ItemStack(ContentDefs.INSTANCE.itemSpellBase);
 		NBTTagCompound nbt = (stack.getTagCompound() != null) ? stack.getTagCompound() : new NBTTagCompound();
 		nbt.setString(DataDefs.SPELL_TAG_ID, ContentDefs.INSTANCE.partTouch.getRegistryName() + " " + ContentDefs.INSTANCE.damagePhysical.getRegistryName());
 		stack.setTagCompound(nbt);
-		playerIn.addItemStackToInventory(stack);*/
+		playerIn.addItemStackToInventory(stack);
 		return true;
 		
 	}

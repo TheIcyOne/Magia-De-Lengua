@@ -1,11 +1,18 @@
 package com.headfishindustries.lengua.block.tile;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileSpellTable extends TileEntity implements IInventory{
+	
+	private ItemStack[] invent = {ItemStack.EMPTY, new ItemStack(Items.PAPER, 1)};
+	
+	private String spellName = "";
+	private String spellText = "";
+	
 
 	public TileSpellTable() {
 		// TODO Auto-generated constructor stub
@@ -13,62 +20,58 @@ public class TileSpellTable extends TileEntity implements IInventory{
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Spell Table";
 	}
 
 	@Override
 	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int getSizeInventory() {
-		// TODO Auto-generated method stub
-		return 1;
+		return 2;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return invent[0].isEmpty() || invent[1].isEmpty() || invent[2].isEmpty();
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		if  (index > getSizeInventory() - 1) return ItemStack.EMPTY;
+		return invent[index];
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		// TODO Auto-generated method stub
-		return null;
+		if  (index > getSizeInventory() - 1) return ItemStack.EMPTY;
+		
+		return invent[index].splitStack(Math.min(count, invent[index].getCount()));
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		if  (index > getSizeInventory() - 1) return ItemStack.EMPTY;
+		
+		return invent[index].splitStack(invent[index].getCount());
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		// TODO Auto-generated method stub
-		
+		if  (index > getSizeInventory() - 1) return;
+		invent[index] = stack;
 	}
 
 	@Override
 	public int getInventoryStackLimit() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 64;
 	}
 
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -85,8 +88,7 @@ public class TileSpellTable extends TileEntity implements IInventory{
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		// TODO Auto-generated method stub
-		return false;
+		return index == 1;
 	}
 
 	@Override
@@ -97,8 +99,17 @@ public class TileSpellTable extends TileEntity implements IInventory{
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
+		switch(id) {
+		case 0:
+			//Make spell.
+			break;
+		case 1:
+			//Reset spell.
+			break;
+		case 2:
+			//Randomly name spell.
+			break;
+		}
 	}
 
 	@Override
@@ -111,6 +122,22 @@ public class TileSpellTable extends TileEntity implements IInventory{
 	public void clear() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public String getSpellName() {
+		return this.spellName;
+	}
+	
+	public void setSpellName(String s) {
+		this.spellName = s;
+	}
+	
+	public String getSpellText() {
+		return this.spellText;
+	}
+	
+	public void setSpellText(String s) {
+		this.spellText = s;
 	}
 
 }
