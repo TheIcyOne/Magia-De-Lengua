@@ -32,7 +32,10 @@ public class BlockSpellTable extends Block implements ITileEntityProvider{
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
+<<<<<<< HEAD
 		
+=======
+>>>>>>> origin/master
 		return new TileSpellTable();
 	}
 	

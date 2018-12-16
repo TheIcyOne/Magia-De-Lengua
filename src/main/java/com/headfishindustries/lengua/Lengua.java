@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.headfishindustries.lengua.api.PartRegistry;
+import com.headfishindustries.lengua.block.tile.TileSpellTable;
 import com.headfishindustries.lengua.defs.ContentDefs;
 import com.headfishindustries.lengua.defs.DataDefs;
 import com.headfishindustries.lengua.gui.LenGui;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = DataDefs.MODID, name = DataDefs.NAME, version = DataDefs.VERSION, acceptedMinecraftVersions = "[1.12, 1.13]")
 public class Lengua {
@@ -41,6 +43,7 @@ public class Lengua {
 	@EventHandler
 	public void init(FMLInitializationEvent e){
 		proxy.init(e);
+		GameRegistry.registerTileEntity(TileSpellTable.class, "spell_table");
 		ContentDefs.INSTANCE.registerParts();
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new LenGui());
 	}
